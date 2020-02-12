@@ -1,3 +1,16 @@
 mat-form-field {
   display: block;
+  padding-top:20px;
+}
+mat-select .mat-select-panel-wrap{
+  padding:20px;
+}
+
+.tp-form {
+  min-width: 200px;
+  max-width: 500px;
+  width: 100%;
+}
+.tp-full-width {
+  width: 100%;
 }

@@ -2,28 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
 
+
+interface TimePeriod {
+  value: string;
+  display: string;
+}
 @Component({
   selector: 'coding-challenge-stocks',
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })
+
 export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
-  symbol: string;
+  value: string;
   period: string;
+  symbol: string;
+  display: string;
 
   quotes$ = this.priceQuery.priceQueries$;
 
-  timePeriods = [
-    { viewValue: 'All available data', value: 'max' },
-    { viewValue: 'Five years', value: '5y' },
-    { viewValue: 'Two years', value: '2y' },
-    { viewValue: 'One year', value: '1y' },
-    { viewValue: 'Year-to-date', value: 'ytd' },
-    { viewValue: 'Six months', value: '6m' },
-    { viewValue: 'Three months', value: '3m' },
-    { viewValue: 'One month', value: '1m' }
+  timePeriods: TimePeriod[]  = [
+    { value: 'max', display: 'All available data'},
+    { value: '5y', display: 'Five years'},
+    { value: '2y', display: 'Two years'},
+    { value: '1y', display: 'One year'},
+    { value: 'ytd', display: 'Year-to-date'},
+    { value: '6m', display: 'Six months'},
+    { value: '3m', display: 'Three months'},
+    { value: '1m', display: 'One month'}
   ];
+
+
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
