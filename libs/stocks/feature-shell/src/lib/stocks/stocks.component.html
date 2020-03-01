@@ -1,7 +1,7 @@
 <form class= "tp-form" [formGroup]="stockPickerForm">
   <mat-form-field class="tp-full-width">
     <mat-label>stocks symbol</mat-label>
-    <input type="text" placeholder="Symbol e.g AAPL"
+    <input type="text" placeholder="Symbol e.g AAPL" autocomplete="off"
            aria-label="stocks symbol" matInput formControlName="symbol"
       value=""/>
     <mat-error><span
@@ -13,11 +13,16 @@
 
   <mat-form-field class="tp-full-width">
     <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
+    <mat-select formControlName="period" (selectionChange)="selectedDatePeriod()">
       <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod.value">
         {{ timePeriod.display}}
       </mat-option>
     </mat-select>
+    <mat-error><span
+      *ngIf="
+          !stockPickerForm.get('period').valid &&
+          stockPickerForm.get('period').touched">Please select a time period</span>
+    </mat-error>
   </mat-form-field>
 
   <button (click)="fetchQuote()" [disabled]="stockPickerForm.invalid" mat-raised-button>Go</button>
