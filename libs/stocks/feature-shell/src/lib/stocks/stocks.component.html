@@ -25,7 +25,19 @@
     </mat-error>
   </mat-form-field>
 
-  <button (click)="fetchQuote()" [disabled]="stockPickerForm.invalid" mat-raised-button>Go</button>
+  <mat-form-field>
+    <mat-label>From Date</mat-label>
+    <input matInput [matDatepicker]="pickerFromDate" formControlName="fromDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFromDate></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>To Date</mat-label>
+    <input matInput [matDatepicker]="pickerToDate" formControlName="toDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerToDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerToDate></mat-datepicker>
+  </mat-form-field>
 </form>
 
-<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
+<coding-challenge-chart *ngIf="quotes$" [data$]="quotes$"></coding-challenge-chart>
