@@ -1,5 +1,7 @@
 <form class= "tp-form" [formGroup]="stockPickerForm">
   <mat-form-field class="tp-full-width">
+<!--   <mat-form-field> has a label it will automatically be used as the aria-label for the <input>.-->
+<!--     However, if there's no label specified in the form field, aria-label, aria-labelledby or <label for=...> should be added-->
     <mat-label>stocks symbol</mat-label>
     <input type="text" placeholder="Symbol e.g AAPL"
            aria-label="stocks symbol" matInput formControlName="symbol"
