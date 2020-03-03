@@ -14,6 +14,8 @@ import { Observable } from 'rxjs';
 export class ChartComponent implements OnInit {
   @Input() data$: Observable<any>;
   chartData: any;
+  @Input() startDate$;
+  @Input() endDate$;
 
   chart: {
     title: string;
@@ -32,6 +34,9 @@ export class ChartComponent implements OnInit {
       columnNames: ['period', 'close'],
       options: { title: `Stock price`, width: '600', height: '400' }
     };
-
+    this.data$.subscribe(newData => {
+      newData = newData.filter((d)=> new Date(d[0]) > new Date(this.startDate$) && new Date(d[0]) < new Date(this.endDate$))
+      return this.chartData = newData
+    });
   }
 }
