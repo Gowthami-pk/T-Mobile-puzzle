@@ -6,10 +6,19 @@ import { Server } from 'hapi';
 import { environment } from './environments/environment';
 import * as axios from 'axios';
 
+const whiteListOrigin = ['http://localhost:4200'];
+
 const init = async () => {
   const server = new Server({
     port: 3333,
-    host: 'localhost'
+    host: 'localhost',
+    routes: {
+      cors: {
+        origin: whiteListOrigin,
+        headers: ['Accept', 'Content-Type'],
+        exposedHeaders: []
+      }
+    }
   });
 
   server.route({

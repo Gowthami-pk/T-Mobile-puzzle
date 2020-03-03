@@ -29,23 +29,9 @@ export class StocksComponent implements OnInit {
     return data;
   }));
 
-  timePeriods: TimePeriod[]  = [
-    { value: 'max', display: 'All available data'},
-    { value: '5y', display: 'Five years'},
-    { value: '2y', display: 'Two years'},
-    { value: '1y', display: 'One year'},
-    { value: 'ytd', display: 'Year-to-date'},
-    { value: '6m', display: 'Six months'},
-    { value: '3m', display: 'Three months'},
-    { value: '1m', display: 'One month'}
-  ];
-
-
-
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = this.fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required],
       fromDate: [null],
       toDate: [null]
     });
@@ -62,13 +48,9 @@ export class StocksComponent implements OnInit {
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
-      const { symbol, period, fromDate, toDate} = this.stockPickerForm.value;
-      this.priceQuery.fetchQuote(symbol, period);
+      const { symbol, fromDate, toDate} = this.stockPickerForm.value;
+      this.priceQuery.fetchQuote(symbol, '1D');
     }
-  }
-
-  selectedDatePeriod() {
-    this.fetchQuote();
   }
 
   private validateDate(control: string) {
