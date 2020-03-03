@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { debounceTime } from 'rxjs/operators';
 
 
 interface TimePeriod {
@@ -42,12 +43,18 @@ export class StocksComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stockPickerForm.controls.symbol.valueChanges.pipe(debounceTime(500)).subscribe(() => this.fetchQuote());
+  }
 
   fetchQuote() {
     if (this.stockPickerForm.valid) {
       const { symbol, period } = this.stockPickerForm.value;
       this.priceQuery.fetchQuote(symbol, period);
     }
+  }
+
+  selectedDatePeriod() {
+    this.fetchQuote();
   }
 }
