@@ -13,24 +13,23 @@
 
   <mat-form-field>
     <mat-label>From Date</mat-label>
-    <input matInput [matDatepicker]="pickerFromDate" [max]="maxDate" formControlName="fromDate" (dateChange)="fetchQuote()">
+    <input matInput [matDatepicker]="pickerFromDate" [max]="max" formControlName="fromDate" (change)="dateSelection($event)">
     <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
     <mat-datepicker #pickerFromDate></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>To Date </mat-label>
-    <input matInput [matDatepicker]="pickerToDate" [max]="maxDate"
-           [min]="stockPickerForm.get('fromDate').value" formControlName="toDate"
-           (dateChange)="fetchQuote()">
+    <input matInput [matDatepicker]="pickerToDate" [max]="max"
+           [min]="stockPickerForm.controls['fromDate'].value" formControlName="toDate">
     <mat-datepicker-toggle matSuffix [for]="pickerToDate"></mat-datepicker-toggle>
     <mat-datepicker #pickerToDate></mat-datepicker>
+    <mat-error *ngIf="stockPickerForm.controls['toDate'].invalid">
+      Please select to Date after your From date.
+    </mat-error>
   </mat-form-field>
+
+  <button (click)="fetchQuote()" mat-button [disabled]="stockPickerForm.invalid" mat-raised-button>Go</button>
 </form>
 
-<button mat-button (click)="fetchQuote()"  mat-raised-button>Go</button>
-
-<coding-challenge-chart
-  [startDate$]="stockPickerForm.get('fromDate').value"
-  [endDate$]="stockPickerForm.get('toDate').value" [data$]="quotes$">
-</coding-challenge-chart>
+<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
