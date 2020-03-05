@@ -1,4 +1,4 @@
-<form class= "tp-form" [formGroup]="stockPickerForm">
+<form class="tp-form" [formGroup]="stockPickerForm">
   <mat-form-field class="tp-full-width">
     <mat-label>stocks symbol</mat-label>
     <input type="text" placeholder="Symbol e.g AAPL" autocomplete="off"
@@ -32,4 +32,4 @@
   <button (click)="fetchQuote()" mat-button [disabled]="stockPickerForm.invalid" mat-raised-button>Go</button>
 </form>
 
-<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
+<coding-challenge-chart [data$]="quotes$" [title]="'Stocks'"></coding-challenge-chart>
