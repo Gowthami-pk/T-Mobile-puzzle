@@ -8,11 +8,13 @@ export const stockApiRequest = (path: string) => {
     requestData(url, (error, response, body) => {
       if (!!response && !!response.statusCode) {
         if (response.statusCode === 200) {
-          console.log('No cache.....')
           resolve(body);
+        } else {
+          resolve(response);
         }
+      } else {
+        resolve(response);
       }
     });
   });
 };
-
