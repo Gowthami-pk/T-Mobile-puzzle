@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
 import { debounceTime } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 
 interface TimePeriod {
@@ -14,7 +15,7 @@ interface TimePeriod {
   styleUrls: ['./stocks.component.css']
 })
 
-export class StocksComponent implements OnInit {
+export class StocksComponent implements OnInit, OnDestroy  {
   stockPickerForm: FormGroup;
   value: string;
   period: string;
@@ -22,6 +23,7 @@ export class StocksComponent implements OnInit {
   display: string;
 
   quotes$ = this.priceQuery.priceQueries$;
+  toDisplayChart:Subscription;
 
   timePeriods: TimePeriod[]  = [
     { value: 'max', display: 'All available data'},
@@ -44,7 +46,7 @@ export class StocksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stockPickerForm.controls.symbol.valueChanges.pipe(debounceTime(500)).subscribe(() => this.fetchQuote());
+    this.toDisplayChart = this.stockPickerForm.controls.symbol.valueChanges.pipe(debounceTime(500)).subscribe(() => this.fetchQuote());
   }
 
   fetchQuote() {
@@ -57,4 +59,9 @@ export class StocksComponent implements OnInit {
   selectedDatePeriod() {
     this.fetchQuote();
   }
+
+  ngOnDestroy() {
+    this.toDisplayChart.unsubscribe();
+  }
+
 }
