@@ -11,11 +11,10 @@ import { Observable } from 'rxjs';
 })
 export class ChartComponent {
   @Input() data$: Observable<any>;
-  @Input() title: string;
   @Input() type: string;
-  @Input() columnNames: string[];
-  @Input() options: any;
-
+  @Input() title: string;
+  @Input() columnNames: string;
+  @Input() options: string;
   constructor() {
 
   }
