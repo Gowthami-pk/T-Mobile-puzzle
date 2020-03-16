@@ -28,7 +28,7 @@ import { environment } from '../environments/environment';
     NxModule.forRoot(),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({
+     !environment.production && StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,
       features: {

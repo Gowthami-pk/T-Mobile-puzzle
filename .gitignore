@@ -8,6 +8,10 @@
 # dependencies
 /node_modules
 
+# coverage and local build
+/coverage
+/dist
+
 # IDEs and editors
 /.idea
 .project
